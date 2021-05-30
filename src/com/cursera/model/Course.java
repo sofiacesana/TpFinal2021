@@ -1,24 +1,30 @@
 package com.cursera.model;
 
+import com.cursera.util.State;
+
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
 
 public class Course {
+    private static Integer courseId;
+    private int id;
     private String name;
     private String description;
     private String duration;
     private LocalDate date;
     private Date startDate;
     private Date finishDate;
-    private String state;
-    private User[] students;
-    private int maxStudentsPerCourse;
-    private static final int MAX_STUDENTS = 50;
-    public List<Course> allCourses;
-
+    private State state;
+    public User[] students;
+    public static int maxStudentsPerCourse;
+    public static final int MAX_STUDENTS = 50;
 
     // region GETTERS & SETTERS
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
     public String getName() {
         return name;
     }
@@ -51,23 +57,23 @@ public class Course {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
+    public Date setStartDate() {
+        return this.startDate = new Date();
     }
 
     public Date getFinishDate() {
         return finishDate;
     }
 
-    public void setFinishDate(Date finishDate) {
-        this.finishDate = finishDate;
+    public Date setFinishDate() {
+        return this.finishDate = new Date();
     }
 
-    public String getState() {
+    public State getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(State state) {
         this.state = state;
     }
 
@@ -75,31 +81,12 @@ public class Course {
 
    // create a course
     public Course(String name, String description, String duration) {
+        this.courseId = ++id;
         this.date = LocalDate.now();
         this.name = name;
         this.description = description;
         this.duration = duration;
         this.students = new User[MAX_STUDENTS];
     }
-
-    // making a list of courses with their respective creators
-    public void listOfCourses (User user, Course course){
-        allCourses.add(user.getmId(), course);
-    }
-
-    public void enrollIntoAcourse (String nameCourse, User user){
-        try{
-            for (Course whatCourse: allCourses) {
-                if (nameCourse == whatCourse.getName()) {
-                    user.addCourse(whatCourse);
-                    whatCourse.students[maxStudentsPerCourse++] = user;
-                    break;
-                }
-            }
-        } catch (ArrayIndexOutOfBoundsException error){
-                System.out.println("|NON-EXISTENT| course");
-            }
-    }
-
 
 }

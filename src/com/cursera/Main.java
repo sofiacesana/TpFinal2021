@@ -1,7 +1,5 @@
 package com.cursera;
 
-import com.cursera.model.Student;
-
 public class Main {
 
 

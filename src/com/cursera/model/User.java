@@ -1,10 +1,8 @@
 package com.cursera.model;
 
-import java.util.List;
-
 public abstract class User {
-    private static int id;
-    private int mId;
+    private static Integer mId;
+    private int id;
     private String name;
     private String surname;
     private String username;
@@ -17,7 +15,7 @@ public abstract class User {
     private Work[] works;
     private int worksIndex;
     private Study[] studies;
-    private static int studiesIndex;
+    private int studiesIndex;
     private String interests;
     private int firm;
     public Course[] courses;
@@ -26,11 +24,10 @@ public abstract class User {
     private int degreesIndex;
     private static final int MAX_W_S = 6;
     public static final int MAX_DEGREES = 12;
-    private static int MAXIMUM;
-    public List<User> users;
+    private int MAXIMUM;
 
     // region GETTERS & SETTERS
-    public int getmId() {
+    public Integer getmId() {
         return mId;
     }
 
@@ -170,16 +167,6 @@ public abstract class User {
                 String location, String provinc, String country, String interests, int firm) {
         this(name, surname, username, psw, DNI, telephone, location, provinc, country, interests);
         this.firm = firm;
-    }
-
-    public String addUser(Object newUser) {
-        String msg = " Registration |SUCCESS| ";
-        if (newUser instanceof User)
-            users.add((User) newUser);
-        else
-            msg = " Registration |DENIED| ";
-
-        return msg;
     }
 
     public void addStudy (Study study){

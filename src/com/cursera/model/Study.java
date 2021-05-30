@@ -43,11 +43,12 @@ public class Study {
     // endregion
 
 
-    public Study (Date initDate, Date finishDate, String place, String location) {
+    public Study (Date initDate, Date finishDate, String place, String location){
         this.initDate = initDate;
         this.finishDate = finishDate;
         this.place = place;
         this.location = location;
     }
+
 
 }
