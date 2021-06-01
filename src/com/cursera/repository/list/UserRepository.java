@@ -48,6 +48,7 @@ public class UserRepository extends AbstractList<User> {
                     break;
                 }
             }
+            break;
         }
         return exist;
     }
