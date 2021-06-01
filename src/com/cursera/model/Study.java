@@ -1,5 +1,6 @@
 package com.cursera.model;
 
+
 import java.util.Date;
 
 public class Study {
@@ -49,6 +50,5 @@ public class Study {
         this.place = place;
         this.location = location;
     }
-
 
 }

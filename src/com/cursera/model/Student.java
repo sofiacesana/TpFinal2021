@@ -1,6 +1,6 @@
 package com.cursera.model;
 
-import static com.cursera.model.studentNtrainer.*;
+import static com.cursera.model.StudentNtrainer.*;
 
 public class Student extends User{
 

@@ -1,6 +1,6 @@
 package com.cursera.model;
 
-import static com.cursera.model.studentNtrainer.MAX_SUBMIT;
+import static com.cursera.model.StudentNtrainer.MAX_SUBMIT;
 
 public class Trainer extends User{
 
