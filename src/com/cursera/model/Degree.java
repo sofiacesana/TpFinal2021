@@ -12,7 +12,19 @@ public class Degree {
     private String trainerSurname;
     private int firm;
 
+    // CONSTRUCTOR
+    public Degree(Course course, User user) {
+        this.degreeId = ++id;
+        this.date = LocalDate.now();
+        this.name = course.getName();
+        this.courseDuration = course.getDuration();
+        this.trainerName = user.getName();
+        this.trainerSurname = user.getSurname();
+        this.firm = user.getFirm();
+    }
+
     // region GETTERS & SETTERS
+
     public static Integer getDegreeId() {
         return degreeId;
     }
@@ -60,21 +72,11 @@ public class Degree {
     public int getFirm() {
         return firm;
     }
-
     public void setFirm(int firm) {
         this.firm = firm;
     }
-    // endregion
 
-    public Degree(Course course, User user) {
-        this.degreeId = ++id;
-        this.date = LocalDate.now();
-        this.name = course.getName();
-        this.courseDuration = course.getDuration();
-        this.trainerName = user.getName();
-        this.trainerSurname = user.getSurname();
-        this.firm = user.getFirm();
-    }
+    // endregion
 
 
 

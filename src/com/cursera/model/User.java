@@ -10,7 +10,7 @@ public abstract class User {
     private String DNI;
     private String telephone;
     private String location;
-    private String provinc;
+    private String province;
     private String country;
     private Work[] works;
     private int worksIndex;
@@ -26,7 +26,51 @@ public abstract class User {
     public static final int MAX_DEGREES = 12;
     private int MAXIMUM;
 
+    // region CONSTRUCTORS
+
+    public User() {
+        this.mId = ++id;
+    }
+
+    public User(String name, String surname, String username, String psw, String DNI, String telephone,
+                String location, String province, String country) {
+        this.mId = ++id;
+        this.name = name;
+        this.surname = surname;
+        this.username = username;
+        this.psw = psw;
+        this.DNI = DNI;
+        this.telephone = telephone;
+        this.location = location;
+        this.province = province;
+        this.country = country;
+        this.studies = new Study[MAX_W_S];
+        this.works = new Work[MAX_W_S];
+        this.setCourseIndex(MAXIMUM);
+        this.setDegreeIndex(MAX_DEGREES);
+    }
+
+    public User(String name, String surname, String username, String psw, String DNI, String telephone,
+                String location, String province, String country, String interests) {
+        this(name, surname, username, psw, DNI, telephone, location, province, country);
+        this.interests = interests;
+    }
+
+    public User(String name, String surname, String username, String psw, String DNI, String telephone,
+                String location, String province, String country, int firm) {
+        this(name, surname, username, psw, DNI, telephone, location, province, country);
+        this.firm = firm;
+    }
+
+    public User(String name, String surname, String username, String psw, String DNI, String telephone,
+                String location, String province, String country, String interests, int firm) {
+        this(name, surname, username, psw, DNI, telephone, location, province, country, interests);
+        this.firm = firm;
+    }
+    // endregion
+
     // region GETTERS & SETTERS
+
     public Integer getmId() {
         return mId;
     }
@@ -87,12 +131,12 @@ public abstract class User {
         this.location = location;
     }
 
-    public String getProvinc() {
-        return provinc;
+    public String getProvince() {
+        return province;
     }
 
-    public void setProvinc(String provinc) {
-        this.provinc = provinc;
+    public void setProvince(String province) {
+        this.province = province;
     }
 
     public String getCountry() {
@@ -122,53 +166,13 @@ public abstract class User {
     public void setCourseIndex(int max) {
          this.courses = new Course[max];
     }
-
     public void setDegreeIndex(int max) {
         this.degrees = new Degree[max];
     }
+
     // endregion
 
-    public User() {
-        this.mId = ++id;
-    }
-
-    public User(String name, String surname, String username, String psw, String DNI, String telephone,
-                String location, String provinc, String country) {
-        this.mId = ++id;
-        this.name = name;
-        this.surname = surname;
-        this.username = username;
-        this.psw = psw;
-        this.DNI = DNI;
-        this.telephone = telephone;
-        this.location = location;
-        this.provinc = provinc;
-        this.country = country;
-        this.studies = new Study[MAX_W_S];
-        this.works = new Work[MAX_W_S];
-        this.setCourseIndex(MAXIMUM);
-        this.setDegreeIndex(MAX_DEGREES);
-    }
-
-
-    public User(String name, String surname, String username, String psw, String DNI, String telephone,
-                String location, String provinc, String country, String interests) {
-        this(name, surname, username, psw, DNI, telephone, location, provinc, country);
-        this.interests = interests;
-    }
-
-    public User(String name, String surname, String username, String psw, String DNI, String telephone,
-                String location, String provinc, String country, int firm) {
-        this(name, surname, username, psw, DNI, telephone, location, provinc, country);
-        this.firm = firm;
-    }
-
-    public User(String name, String surname, String username, String psw, String DNI, String telephone,
-                String location, String provinc, String country, String interests, int firm) {
-        this(name, surname, username, psw, DNI, telephone, location, provinc, country, interests);
-        this.firm = firm;
-    }
-
+    // OTHER METHODS
     public void addStudy (Study study){
         this.studies[studiesIndex++] = study;
     }
