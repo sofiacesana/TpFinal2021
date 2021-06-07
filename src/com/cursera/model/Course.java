@@ -19,6 +19,17 @@ public class Course {
     public static int maxStudentsPerCourse;
     public static final int MAX_STUDENTS = 50;
 
+    // region CONSTRUCTORS
+    public Course(String name, String description, String duration) {
+        this.courseId = ++id;
+        this.date = LocalDate.now();
+        this.name = name;
+        this.description = description;
+        this.duration = duration;
+        this.students = new User[MAX_STUDENTS];
+    }
+    // endregion
+
     // region GETTERS & SETTERS
 
     public Integer getCourseId() {
@@ -78,15 +89,5 @@ public class Course {
     }
 
     // endregion
-
-   // create a course
-    public Course(String name, String description, String duration) {
-        this.courseId = ++id;
-        this.date = LocalDate.now();
-        this.name = name;
-        this.description = description;
-        this.duration = duration;
-        this.students = new User[MAX_STUDENTS];
-    }
 
 }

@@ -76,7 +76,7 @@ public class UserRepository extends AbstractList<User> {
         u.setDNI(u.getDNI());
         u.setTelephone(u.getTelephone());
         u.setLocation(u.getLocation());
-        u.setProvinc(u.getProvinc());
+        u.setProvince(u.getProvince());
         u.setCountry(u.getCountry());
 
         if (user.getClass() == Student.class)

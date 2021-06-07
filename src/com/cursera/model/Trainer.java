@@ -4,6 +4,7 @@ import static com.cursera.model.StudentNtrainer.MAX_SUBMIT;
 
 public class Trainer extends User{
 
+    // CONSTRUCTOR
     public Trainer(String name, String surname, String username, String psw, String DNI, String telephone,
                    String location, String provinc, String country, Byte firm) {
         super(name, surname, username, psw, DNI, telephone, location, provinc, country, firm);
