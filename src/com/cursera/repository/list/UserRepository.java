@@ -1,13 +1,57 @@
 package com.cursera.repository.list;
 
 import com.cursera.model.Student;
+import com.cursera.model.StudentNtrainer;
+import com.cursera.model.Trainer;
 import com.cursera.model.User;
 import com.cursera.repository.AbstractList;
 import com.cursera.util.Direction;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class UserRepository extends AbstractList<User> {
+
+    public void registration (){
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println(" Seleccionar |modo de registración| \t ALUMNO (1) \t CAPACITADOR (2) " +
+                "\t ALUMNO & CAPACITADOR (3) \t\n |0| SALIR \t");
+      /*  switch (sc.nextShort()) {
+            case 0:
+
+                break;
+            case 1:
+
+                break;
+            case 2:
+
+                break;
+
+            case 3:
+
+            default:
+                System.out.println("\n |INVALIDO| ");
+                break;
+        }*/
+    }
+
+    public User login (String userName){
+        User exist = null;
+        Scanner sc = new Scanner(System.in);
+
+        for (User whatUser: dataSource){
+            if (whatUser.getUsername().equals(userName)){
+                System.out.println(" Ingresar |CONTRASEÑA| ");
+                if (whatUser.getPsw().equals(sc.nextLine())){
+                    exist = whatUser;
+                    break;
+                }
+            }
+            break;
+        }
+        return exist;
+    }
 
     @Override
     public User searchById(Integer id) {
@@ -32,14 +76,16 @@ public class UserRepository extends AbstractList<User> {
         u.setDNI(u.getDNI());
         u.setTelephone(u.getTelephone());
         u.setLocation(u.getLocation());
-        u.setProvinc(u.getProvinc());
+        u.setProvince(u.getProvince());
         u.setCountry(u.getCountry());
 
-        if (user.getClass() == Student.class) {
+        if (user.getClass() == Student.class)
             u.setInterests(u.getInterests());
-        } else {
+        if (user.getClass() == Trainer.class)
             u.setFirm(u.getFirm());
-        }
+        if (user.getClass() == StudentNtrainer.class)
+            u.setInterests(u.getInterests());
+            u.setFirm(u.getFirm());
     }
 
     @Override
@@ -71,8 +117,6 @@ public class UserRepository extends AbstractList<User> {
 
         return result;
     }
-
-
 
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.cursera.model.Course.*;
-import static com.cursera.model.studentNtrainer.MAX_ENROLL;
+import static com.cursera.model.StudentNtrainer.MAX_ENROLL;
 
 public class CourseRepository extends AbstractList<Course> {
     public static Map<Integer, Course> listofCourses = new HashMap<>();

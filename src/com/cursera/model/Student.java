@@ -1,6 +1,6 @@
 package com.cursera.model;
 
-import static com.cursera.model.studentNtrainer.*;
+import static com.cursera.model.StudentNtrainer.*;
 
 public class Student extends User{
 
@@ -9,6 +9,5 @@ public class Student extends User{
         super(name, surname, username, psw, DNI, telephone, location, provinc, country, interests);
         super.setCourseIndex(MAX_ENROLL); // limit of courses can enroll
     }
-
 
 }
