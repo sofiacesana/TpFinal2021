@@ -1,16 +1,13 @@
+package com.cursera.data;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-
-import java.util.ArrayList;
 import java.util.List;
 
-public class ToJson<T> {
-  // Create a generic List
-  List<T> list = new ArrayList<T>();
-  // Convert list to Json
-  JsonArray jsonArray = new Gson().toJsonTree(list).getAsJsonArray();
-
-  public static void main(JsonArray jsonArray)throws Exception {
+public class ToJson{
+  public void jsonFile(List list){
+    // Convert list to Json
+    JsonArray jsonArray = new Gson().toJsonTree(list).getAsJsonArray();
     // Show json file as a string
     System.out.println(jsonArray.toString());
   }
