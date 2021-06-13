@@ -8,7 +8,12 @@ import com.cursera.repository.list.CourseRepository;
 import com.cursera.repository.list.UserRepository;
 import com.cursera.menus.StudentMenu;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class MainMenu {
@@ -185,5 +190,72 @@ public class MainMenu {
         }
     }
 
+    public static void fileToList(String fileName, List list) {
+        if(!new File(fileName).exists())
+            return;
 
+        BufferedReader fileIn = null;
+
+        try{
+            fileIn = new BufferedReader(
+                    new FileReader(new File(fileName))
+            );
+
+            String line = null;
+
+            while((line = fileIn.readLine()) != null) {
+                list.add(line);
+            }
+
+        }catch(IOException e) {
+            System.out.println(e.getMessage());
+
+        } finally {
+
+            if(fileIn != null) {
+                try {
+                    fileIn.close();
+                }
+                catch(IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+    }
+
+    /*
+    public List fileToList(String fileName, List list) {
+        if(!new File(fileName).exists())
+            return null;
+
+        BufferedReader fileIn = null;
+
+        try{
+            fileIn = new BufferedReader(
+                    new FileReader(new File(fileName))
+            );
+
+            String line = fileIn.readLine();
+
+            while(fileIn.readLine() != null) {
+                list.add(line);
+            }
+
+        }catch(IOException e) {
+            System.out.println(e.getMessage());
+
+        } finally {
+
+            if(fileIn != null) {
+                try {
+                    fileIn.close();
+                }
+                catch(IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        return list;
+    }
+     */
 }
