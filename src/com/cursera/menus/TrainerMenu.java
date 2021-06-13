@@ -13,7 +13,7 @@ public class TrainerMenu extends MainMenu {
         System.out.println("Insert: " +
                 "    1- To see your uploaded courses." +
                 "    2- To upload a new course." +
-                "    3- To see your students' progress on your courses." +
+                "    3- To see your student's progress on your courses." +
                 "    4- To see the degrees students got in your courses." +
                 "    5- To delete a course." +
                 "    6- To edit the information on one of your courses." +

@@ -58,37 +58,4 @@ public class ToFiles{
             }
         }
     }
-
-    public static void fileToList(String fileName, List list) {
-        if(!new File(fileName).exists())
-            return;
-
-        BufferedReader fileIn = null;
-
-        try{
-            fileIn = new BufferedReader(
-                    new FileReader(new File(fileName))
-            );
-
-            String line = null;
-
-            while((line = fileIn.readLine()) != null) {
-                list.add(line);
-            }
-
-        }catch(IOException e) {
-            System.out.println(e.getMessage());
-
-        } finally {
-
-            if(fileIn != null) {
-                try {
-                    fileIn.close();
-                }
-                catch(IOException e) {
-                    System.out.println(e.getMessage());
-                }
-            }
-        }
-    }
 }
