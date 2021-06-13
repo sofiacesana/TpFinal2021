@@ -25,6 +25,7 @@ public class ToFiles{
             System.out.println(e.getMessage());
         }
     }
+
     public static void readingFile(String fileName) {
         if(!new File(fileName).exists())
             return;
@@ -40,6 +41,39 @@ public class ToFiles{
 
             while((line = fileIn.readLine()) != null) {
                 System.out.println(line);
+            }
+
+        }catch(IOException e) {
+            System.out.println(e.getMessage());
+
+        } finally {
+
+            if(fileIn != null) {
+                try {
+                    fileIn.close();
+                }
+                catch(IOException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+    }
+
+    public static void fileToList(String fileName, List list) {
+        if(!new File(fileName).exists())
+            return;
+
+        BufferedReader fileIn = null;
+
+        try{
+            fileIn = new BufferedReader(
+                    new FileReader(new File(fileName))
+            );
+
+            String line = null;
+
+            while((line = fileIn.readLine()) != null) {
+                list.add(line);
             }
 
         }catch(IOException e) {
