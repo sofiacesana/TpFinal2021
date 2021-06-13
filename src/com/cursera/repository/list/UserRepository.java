@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class UserRepository extends AbstractList<User> {
 
-    public void registration (){
+    public User registration (){
         Scanner sc = new Scanner(System.in);
 
         System.out.println(" Seleccionar |modo de registración| \t ALUMNO (1) \t CAPACITADOR (2) " +
