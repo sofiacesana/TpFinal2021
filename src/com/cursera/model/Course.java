@@ -20,6 +20,7 @@ public class Course {
     public static final int MAX_STUDENTS = 50;
 
     // region CONSTRUCTORS
+    // create a course
     public Course(String name, String description, String duration) {
         this.courseId = ++id;
         this.date = LocalDate.now();
@@ -89,5 +90,4 @@ public class Course {
     }
 
     // endregion
-
 }
