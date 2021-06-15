@@ -1,7 +1,6 @@
 package com.cursera.model;
 
 import java.util.Scanner;
-
 import static com.cursera.model.StudentNtrainer.MAX_SUBMIT;
 
 public class Trainer extends User{
@@ -15,7 +14,7 @@ public class Trainer extends User{
         super.setCourseIndex(MAX_SUBMIT); // limit of courses can submit
     }
 
-    public Trainer getDataTrainer() {
+    public static Trainer getDataTrainer() {
         Trainer t = new Trainer();
 
         Scanner sc = new Scanner(System.in);

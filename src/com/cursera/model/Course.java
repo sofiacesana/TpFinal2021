@@ -1,7 +1,6 @@
 package com.cursera.model;
 
 import com.cursera.util.State;
-
 import java.time.LocalDate;
 import java.util.Date;
 

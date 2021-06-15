@@ -6,6 +6,6 @@ public interface Crud <T>{
     List<T> list();
     T searchById(Integer id);
     void create (T t);
-    void edit (T t);
+    T edit (T t);
     void delete (Integer id);
 }

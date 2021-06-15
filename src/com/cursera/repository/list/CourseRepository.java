@@ -1,17 +1,15 @@
 package com.cursera.repository.list;
 
-import com.cursera.model.Course;
+import com.cursera.model.*;
 import com.cursera.util.State;
-import com.cursera.model.User;
 import com.cursera.repository.AbstractList;
 import com.cursera.util.Direction;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 import static com.cursera.model.Course.*;
 import static com.cursera.model.StudentNtrainer.MAX_ENROLL;
+import static com.cursera.util.Resources.*;
 
 public class CourseRepository extends AbstractList<Course> {
     public static Map<Integer, Course> listofCourses = new HashMap<>();
@@ -19,8 +17,8 @@ public class CourseRepository extends AbstractList<Course> {
     @Override
     public Course searchById(Integer id) {
         Course result = null;
-        for (Course whatCourse: dataSource){
-            if ( whatCourse.getCourseId() != null && whatCourse.getCourseId().equals(id)){
+        for (Course whatCourse : dataSource) {
+            if (whatCourse.getCourseId() != null && whatCourse.getCourseId().equals(id)) {
                 result = whatCourse;
                 break;
             }
@@ -29,24 +27,40 @@ public class CourseRepository extends AbstractList<Course> {
     }
 
     @Override
-    public void edit(Course course) {
-        Course c = this.searchById(course.getCourseId());
+    public Course edit(Course course) {
+        Course editCourse = this.searchById(course.getCourseId());
 
-        c.setName(c.getName());
-        c.setDescription(c.getDescription());
-        c.setDuration(c.getDuration());
+        Scanner scan = new Scanner(System.in);
+        editInformationCourse(editCourse);
+
+        int op = optionInput(1, 3);
+        switch (op) {
+            case 1:
+                System.out.print("Introduce your new name: ");
+                editCourse.setName(scan.nextLine());
+                break;
+            case 2:
+                System.out.print("Introduce your new course description: ");
+                editCourse.setDescription(scan.nextLine());
+                break;
+            case 3:
+                System.out.print("Introduce your new duration: ");
+                editCourse.setDuration(scan.next());
+                break;
+        }
+        return editCourse;
     }
+
 
     @Override
     public List<Course> list(String field, Direction dir) {
         List<Course> orderedList = new ArrayList<>(this.dataSource);
 
-        orderedList.sort((a,b) ->{
+        orderedList.sort((a, b) -> {
             int result = 0;
-            if (dir == Direction.ASC){
+            if (dir == Direction.ASC) {
                 result = order(field, a, b);
-            }
-            else if (dir == Direction.DESC){
+            } else if (dir == Direction.DESC) {
                 result = order(field, b, a);
             }
             return result;
@@ -66,30 +80,30 @@ public class CourseRepository extends AbstractList<Course> {
     }
 
     // making a map of every course with their respective id´s creator
-    public void listOfCourses (Integer userId, Course course){
+    public void listOfCourses(Integer userId, Course course) {
         listofCourses.put(userId, course);
     }
 
-    public void enrollIntoAcourse (String nameCourse, User user){
-        try{
-            for (Course whatCourse: dataSource) {
-                if (nameCourse == whatCourse.getName())
+    public static void enrollIntoAcourse(Integer courseId, User user) {
+        try {
+            for (Course whatCourse : dataSource) {
+                if (courseId == whatCourse.getCourseId())
                     if (whatCourse.maxStudentsPerCourse < MAX_STUDENTS
-                    && user.courses.length < MAX_ENROLL)
+                            && user.courses.length < MAX_ENROLL)
                         user.addCourse(whatCourse);
                 whatCourse.students[maxStudentsPerCourse++] = user;
                 break;
             }
-        } catch (ArrayIndexOutOfBoundsException error){
+        } catch (ArrayIndexOutOfBoundsException error) {
             System.out.println(" course |WITHOUT PLACE| ");
         }
     }
 
     // update the state of a current course (user == student)
-    public void courseState (User user, Course course){
+    public void courseState(User user, Course course, State state) {
         int search = course.getCourseId();
 
-        for (Course whatCourse: user.courses){
+        for (Course whatCourse : user.courses) {
             if (whatCourse.getCourseId().equals(search))
                 whatCourse.setStartDate();
             whatCourse.setState(whatCourse.getState());
@@ -97,4 +111,20 @@ public class CourseRepository extends AbstractList<Course> {
                 whatCourse.setFinishDate();
         }
     }
+
+    public static void dropOutCourse(Integer courseId, User user) {
+        try{
+            for (Course whatCourse: user.courses) {
+                if (courseId == whatCourse.getCourseId())
+                    whatCourse.setState(State.DROP_OUT);
+                break;
+            }
+        } catch (ArrayIndexOutOfBoundsException error){
+            System.out.println(" course |NON-EXISTENT| ");
+        }
+
+
+    }
+
+
 }

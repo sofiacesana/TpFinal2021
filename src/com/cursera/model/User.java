@@ -1,6 +1,6 @@
 package com.cursera.model;
 
-public abstract class User {
+public class User {
     private static Integer mId;
     private int id;
     private String name;

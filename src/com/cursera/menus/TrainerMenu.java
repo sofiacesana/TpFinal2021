@@ -1,35 +1,52 @@
 package com.cursera.menus;
 
+import com.cursera.model.Course;
 import com.cursera.model.User;
+import java.util.Arrays;
+import java.util.Scanner;
 
-public class TrainerMenu extends MainMenu {
+import static com.cursera.menus.MainMenu.firstScreen;
+import static com.cursera.util.Resources.optionInput;
 
-    public TrainerMenu(User logged) {
-        this.logged = logged;
-    }
+public class TrainerMenu {
 
-    private void trainerOptionsList() {
+    public static void trainerOptionsList() {
         System.out.println("           TRAINER MENU           ");
-        System.out.println("Insert: " +
+        System.out.println("Please select an option: " +
                 "    1- To see your uploaded courses." +
                 "    2- To upload a new course." +
-                "    3- To see your students' progress on your courses." +
-                "    4- To see the degrees students got in your courses." +
-                "    5- To delete a course." +
-                "    6- To edit the information on one of your courses." +
-                "    7- To edit your information." +
-                "    8- To exit." +
-                "Please select an option: ");
+                "    3- To delete a course." +
+                "    4- To edit the information on one of your courses." +
+                "    5- To edit your information." +
+                "    6- To exit."
+                );
     }
 
-    public void trainerMainMenu() {
+    public static void trainerMenu(User user) {
+        //Resources
+        String courseName;
+        String description;
+        String duration;
+        Scanner in = new Scanner(System.in);
+
         trainerOptionsList();
-        int op = optionInput(1, 8);
+        int op = optionInput(1, 6);
         switch (op) {
             case 1:
-
+                System.out.println(" ------------------- ");
+                System.out.println(Arrays.toString(user.courses));
+                break;
             case 2:
+                System.out.println(" Name: ");
+                courseName = in.nextLine();
+                System.out.println(" Description ");
+                description = in.nextLine();
+                System.out.println(" Duration ");
+                duration = in.nextLine();
+                Course newCourse = new Course(courseName, description,duration);
 
+
+                break;
             case 3:
 
             case 4:
@@ -37,14 +54,9 @@ public class TrainerMenu extends MainMenu {
             case 5:
 
             case 6:
-
-            case 7:
-                super.editInformation();
-                break;
-            case 8:
-
-            default:
                 System.out.println("Going back to main menu...");
+                firstScreen();
+                break;
         }
     }
 }

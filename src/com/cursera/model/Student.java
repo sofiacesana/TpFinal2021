@@ -11,7 +11,7 @@ public class Student extends User{
         super.setCourseIndex(MAX_ENROLL); // limit of courses can enroll
     }
 
-    public Student getDataStudent() {
+    public static Student getDataStudent() {
         Student st = new Student();
 
         Scanner sc = new Scanner(System.in);

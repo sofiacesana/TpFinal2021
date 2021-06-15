@@ -5,7 +5,7 @@ import java.util.List;
 
 public abstract class AbstractList<T> implements All<T> {
 
-    protected List<T> dataSource;
+    public List<T> dataSource;
 
     public AbstractList(){
         this.dataSource = new ArrayList<>();

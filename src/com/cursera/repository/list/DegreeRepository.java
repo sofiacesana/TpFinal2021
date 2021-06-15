@@ -5,6 +5,9 @@ import com.cursera.repository.AbstractList;
 import com.cursera.util.Direction;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
+import static com.cursera.util.Resources.*;
 
 public class DegreeRepository extends AbstractList<Degree> {
 
@@ -21,15 +24,37 @@ public class DegreeRepository extends AbstractList<Degree> {
     }
 
     @Override
-    public void edit(Degree degree) {
-        Degree d = this.searchById(degree.getDegreeId());
+    public Degree edit(Degree degree) {
+        Degree editDegree = this.searchById(degree.getDegreeId());
 
-        d.setCourseName(d.getCourseName());
-        d.setCourseDuration(d.getCourseDuration());
-        d.setDate(d.getDate());
-        d.setTrainerName(d.getTrainerName());
-        d.setTrainerSurname(d.getTrainerName());
-        d.setFirm(d.getFirm());
+        Scanner scan = new Scanner(System.in);
+        editInformationDegree(editDegree);
+
+        int op = optionInput(1, 5);
+
+        switch(op){
+            case 1:
+                System.out.print("Introduce your new name: ");
+                editDegree.setCourseName(scan.nextLine());
+                break;
+            case 2:
+                System.out.print("Introduce your new course duration: ");
+                editDegree.setCourseDuration(scan.nextLine());
+                break;
+            case 3:
+                System.out.print("Introduce your new trainer name: ");
+                editDegree.setTrainerName(scan.next());
+                break;
+            case 4:
+                System.out.print("Introduce your new trainer surname: ");
+                editDegree.setTrainerSurname(scan.next());
+                break;
+            case 5:
+                System.out.print("Introduce your new firm: ");
+                editDegree.setFirm(scan.nextInt());
+                break;
+        }
+        return editDegree;
     }
 
     @Override

@@ -16,7 +16,7 @@ public class StudentNtrainer extends User{
         this.enrolled = new Course[MAX_ENROLL]; // limit of courses can enroll
     }
 
-    public StudentNtrainer getDataStudentTrainer() {
+    public static StudentNtrainer getDataStudentTrainer() {
         StudentNtrainer snt = new StudentNtrainer();
 
         Scanner sc = new Scanner(System.in);
