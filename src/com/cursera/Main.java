@@ -20,9 +20,6 @@ public class Main {
 
     public static void main(String[] args) {
         List<User> users = readJsonUser("users.json");
-        /*/for (var user : users){
-            System.out.println(user.toString());
-        }/*/
 
         List<Course> courses = new ArrayList();
         courses = readJsonCourse("courses.json");
