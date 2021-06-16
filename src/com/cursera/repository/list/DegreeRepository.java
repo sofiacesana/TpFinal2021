@@ -24,8 +24,8 @@ public class DegreeRepository extends AbstractList<Degree> {
     }
 
     @Override
-    public Degree edit(Degree degree) {
-        Degree editDegree = this.searchById(degree.getDegreeId());
+    public Degree edit(Integer id) {
+        Degree editDegree = this.searchById(id);
 
         Scanner scan = new Scanner(System.in);
         editInformationDegree(editDegree);
@@ -34,23 +34,23 @@ public class DegreeRepository extends AbstractList<Degree> {
 
         switch(op){
             case 1:
-                System.out.print("Introduce your new name: ");
+                System.out.print("Introduce the new name: ");
                 editDegree.setCourseName(scan.nextLine());
                 break;
             case 2:
-                System.out.print("Introduce your new course duration: ");
+                System.out.print("Introduce the new course duration: ");
                 editDegree.setCourseDuration(scan.nextLine());
                 break;
             case 3:
-                System.out.print("Introduce your new trainer name: ");
+                System.out.print("Introduce the new trainer name: ");
                 editDegree.setTrainerName(scan.next());
                 break;
             case 4:
-                System.out.print("Introduce your new trainer surname: ");
+                System.out.print("Introduce the new trainer surname: ");
                 editDegree.setTrainerSurname(scan.next());
                 break;
             case 5:
-                System.out.print("Introduce your new firm: ");
+                System.out.print("Introduce the new firm: ");
                 editDegree.setFirm(scan.nextInt());
                 break;
         }

@@ -2,6 +2,8 @@ package com.cursera.menus;
 
 import com.cursera.model.User;
 
+import java.util.List;
+
 import static com.cursera.menus.StudentMenu.studentMenu;
 import static com.cursera.menus.TrainerMenu.trainerMenu;
 import static com.cursera.util.Resources.optionInput;
@@ -22,15 +24,15 @@ public class StudentNTrainerMenu {
                 "Please select an option: ");
     }
 
-    public static void studentNTrainerMenu(User user){
+    public static void studentNTrainerMenu(User user, List users, List courses, List degrees){
         studentNTrainerOptionsList();
         int op = optionInput(1, 3);
         switch(op){
             case 1:
-              studentMenu(user);
+              studentMenu(user, users, courses, degrees);
                 break;
             case 2:
-                trainerMenu(user);
+                trainerMenu(user, users, courses, degrees);
                 break;
         }
     }

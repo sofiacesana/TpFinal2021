@@ -25,7 +25,7 @@ public class ToFiles {
     }
 
     // convert a file into a list and return it
-    public List fileToList(String fileName) {
+    public static List fileToList(String fileName) {
         List list = new ArrayList();
 
         readingFileToList(fileName, list);
@@ -100,7 +100,7 @@ public class ToFiles {
     }
 
     // file into a map and return it
-    public Map jsonToMap(String fileName) {
+    public static Map jsonToMap(String fileName) {
         Map map = new HashMap();
 
         try {

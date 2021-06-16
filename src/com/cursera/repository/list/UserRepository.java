@@ -10,6 +10,7 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+import static com.cursera.menus.StudentMenu.studentMenu;
 import static com.cursera.util.Resources.editInformationListing;
 import static com.cursera.util.Resources.optionInput;
 
@@ -29,10 +30,9 @@ public class UserRepository extends AbstractList<User> {
     }
 
 
-
     @Override
-    public User edit(User user) {
-        User editUser = this.searchById(user.getmId());
+    public User edit(Integer id) {
+        User editUser = this.searchById(id);
 
         Scanner scan = new Scanner(System.in);
         editInformationListing(editUser);
@@ -108,6 +108,8 @@ public class UserRepository extends AbstractList<User> {
                 System.out.println("Introduce your new interests: ");
                 editUser.setInterests(scan.nextLine());
                 break;
+            default:
+                System.out.println(" Going to the principal menu... ");
         }
         return editUser;
     }

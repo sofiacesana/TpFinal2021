@@ -19,6 +19,9 @@ public class Course {
     public static final int MAX_STUDENTS = 50;
 
     // region CONSTRUCTORS
+    public Course(){
+
+    }
     // create a course
     public Course(String name, String description, String duration) {
         this.courseId = ++id;
