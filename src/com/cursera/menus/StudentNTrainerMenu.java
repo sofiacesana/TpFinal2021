@@ -1,6 +1,9 @@
 package com.cursera.menus;
 
+import com.cursera.model.Course;
+import com.cursera.model.Degree;
 import com.cursera.model.User;
+import com.cursera.repository.All;
 
 import java.util.List;
 
@@ -18,21 +21,21 @@ public class StudentNTrainerMenu {
     public static void studentNTrainerOptionsList(){
         System.out.println("           STUDENT AND TRAINER MENU           ");
         System.out.print("Insert: " +
-                "    1- To see the Student options." +
-                "    2- To see the Trainer options." +
-                "    3- To exit." +
+                "\n    1- To see the Student options." +
+                "\n    2- To see the Trainer options." +
+                "\n    3- To exit." +
                 "Please select an option: ");
     }
 
-    public static void studentNTrainerMenu(User user, List users, List courses, List degrees){
+    public static void studentNTrainerMenu(All<User> repoUser, All<Course> repoCourse, All<Degree> repoDegree, User user, List users, List courses, List degrees){
         studentNTrainerOptionsList();
         int op = optionInput(1, 3);
         switch(op){
             case 1:
-              studentMenu(user, users, courses, degrees);
+              studentMenu(repoUser, repoCourse, repoDegree, user, users, courses, degrees);
                 break;
             case 2:
-                trainerMenu(user, users, courses, degrees);
+                trainerMenu(repoUser, repoCourse, repoDegree, user, users, courses, degrees);
                 break;
         }
     }

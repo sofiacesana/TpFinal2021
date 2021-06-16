@@ -134,15 +134,13 @@ public class UserRepository extends AbstractList<User> {
     private int order(String field, User a, User b) {
         int result = 0;
 
-            if (field == "id")
-                    result = a.getmId().compareTo(b.getmId());
-            if (field == "surname")
-                result = a.getSurname().compareTo(b.getSurname());
-            if (field == "DNI")
-                result = a.getDNI().compareTo(b.getDNI());
+        if (field == "id")
+            result = a.getmId().compareTo(b.getmId());
+        if (field == "surname")
+            result = a.getSurname().compareTo(b.getSurname());
+        if (field == "DNI")
+            result = a.getDNI().compareTo(b.getDNI());
 
         return result;
     }
-
-
 }

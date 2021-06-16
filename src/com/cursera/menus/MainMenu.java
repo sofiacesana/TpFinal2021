@@ -3,9 +3,13 @@ package com.cursera.menus;
 import com.cursera.model.*;
 import com.cursera.repository.All;
 import com.cursera.repository.list.UserRepository;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
-import static com.cursera.data.ToFiles.writingFile;
+
+import static com.cursera.data.ToFiles.*;
 import static com.cursera.data.ToJson.jsonFile;
 import static com.cursera.menus.StudentMenu.studentMenu;
 import static com.cursera.menus.StudentNTrainerMenu.studentNTrainerMenu;
@@ -17,14 +21,16 @@ import static com.cursera.util.Resources.optionInput;
 
 public class MainMenu {
 
-        public static void firstScreen (List allUser, List allCourses, List degrees) {
-            All<User> repoUser = new UserRepository();
-            List <User> users = allUser;
+
+        public static void firstScreen (All<User> repoUser, All<Course> repoCourse, All<Degree> repoDegree, List<User> allUser, List allCourses, List degrees) {
+
+            List<User> users = allUser;
 
             Scanner sc = new Scanner(System.in);
             User whatUser = new User();
+
             System.out.println("-------------- ¡Welcome to Cursera! --------------");
-            System.out.print(" Please select an option ");
+            System.out.print(" Please select an option \n");
             System.out.println("    1- Log in. ");
             System.out.println("    2- Register.");
             System.out.println(" -------------------------------------------------");
@@ -35,46 +41,59 @@ public class MainMenu {
             System.out.println(" -------------------------------------------------");
             System.out.println("    6- Exit \n ");
 
-            int option = optionInput(1, 2);
+            int option = optionInput(1, 6);
             switch (option) {
                 case 1:
                     System.out.println(" Insert |USERNAME| ");
-                    whatUser = login(sc.nextLine(), users);
+                    whatUser = login(sc.next(), users);
 
                     if (whatUser == null) {
                         System.out.println(" User |NON-EXISTENT| ");
-                        firstScreen(users, allCourses, degrees);
+                        firstScreen(repoUser, repoCourse, repoDegree, users, allCourses, degrees);
                     } else if (whatUser instanceof Student) {
-                        studentMenu(whatUser, users, allCourses, degrees);
+                        studentMenu(repoUser, repoCourse, repoDegree, whatUser, users, allCourses, degrees);
                     } else if (whatUser instanceof Trainer) {
-                        trainerMenu(whatUser, users, allCourses, degrees);
+                        trainerMenu(repoUser, repoCourse, repoDegree, whatUser, users, allCourses, degrees);
                     } else {
-                        studentNTrainerMenu(whatUser, users, allCourses, degrees);
+                        studentNTrainerMenu(repoUser, repoCourse, repoDegree, whatUser, users, allCourses, degrees);
                     }
                     break;
                 case 2:
-                    whatUser = registration(users, allCourses, degrees);
+                    whatUser = registration(repoUser, repoCourse, repoDegree, users, allCourses, degrees);
+                    if(users.get(0) != null){
+                        for(var user : users) {
+                            repoUser.create(user);
+                        }
+                    }
                     repoUser.create(whatUser);
-                    writingFile("users", users);
-                    firstScreen(users, allCourses, degrees);
+                    users = repoUser.list();
+                    writeJsonUser("users.json", repoUser);
+                    firstScreen(repoUser, repoCourse, repoDegree, users, allCourses, degrees);
+
+                    firstScreen(repoUser, repoCourse, repoDegree, users, allCourses, degrees);
                     break;
                 case 3:
-                    jsonFile(users);
+                    //writeJsonList("users.json", repoUser);
+                    //readJsonList("users.json");
                     break;
                 case 4:
-                    jsonFile(allCourses);
+                    //jsonFile(allCourses);
+                    //writeJsonList("allCourses.json", allCourses);
+                    //readJsonList("allCourses.json");
                     break;
                 case 5:
-                    jsonFile(degrees);
+                    //jsonFile(degrees);
+                    //writeJsonList("degrees.json", degrees);
+                    //readJsonList("degrees.json");
                     break;
                 default:
-                    System.out.println(" Thanks for join our learning... ");
+                    System.out.println(" Thanks for choosing us, see you later! ");
                     break;
             }
         }
 
 
-        public static User registration (List users, List courses, List degrees) {
+        public static User registration (All<User> repoUser, All<Course> repoCourse, All<Degree> repoDegree, List users, List courses, List degrees) {
             User whatUser = new User();
             System.out.println(" Register like: ");
             System.out.println("    1- Student ");
@@ -93,8 +112,8 @@ public class MainMenu {
                 case 3:
                     whatUser = getDataStudentTrainer();
                     break;
-                default:
-                    firstScreen(users,courses, degrees);
+                case 0:
+                    firstScreen(repoUser, repoCourse, repoDegree, users, courses, degrees);
             }
             return whatUser;
         }
@@ -104,18 +123,21 @@ public class MainMenu {
         Scanner sc = new Scanner(System.in);
         List <User> users = list;
 
-        for (User whatUser: users){
-            if (whatUser.getUsername().equals(userName)){
-                System.out.println(" Enter |PASSWORD| ");
-                if (whatUser.getPsw().equals(sc.nextLine())){
-                    exist = whatUser;
-                    break;
+        for (User whatUser : users){
+            if(exist == null){
+                if (whatUser.getUsername().compareToIgnoreCase(userName) == 0){
+                    System.out.println(" Enter |PASSWORD| ");
+                    if (whatUser.getPsw().compareToIgnoreCase(sc.nextLine()) == 0){
+                        exist = whatUser;
+                    }else{
+                        System.out.println("Incorrect password. Try again.");
+                        exist = login(userName, list);
+                    }
                 }
             }
-            break;
         }
         return exist;
     }
 
-    }
+}
 

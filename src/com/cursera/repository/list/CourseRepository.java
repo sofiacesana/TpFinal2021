@@ -7,7 +7,6 @@ import com.cursera.util.Direction;
 
 import java.util.*;
 
-import static com.cursera.data.ToFiles.writeJson;
 import static com.cursera.model.Course.*;
 import static com.cursera.model.StudentNtrainer.MAX_ENROLL;
 import static com.cursera.util.Resources.*;
@@ -85,7 +84,7 @@ public class CourseRepository extends AbstractList<Course> {
     // making a map of every course with their respective id´s creator
     public static void listOfCourses(Integer userId, Course course) {
         listofCourses.put(userId, course);
-        writeJson("courses", listofCourses);
+        //writeJsonCourses("courses.json", listofCourses);
     }
 
     public static void enrollIntoAcourse(Integer courseId, User user, List allCourses) {

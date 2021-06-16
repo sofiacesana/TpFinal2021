@@ -1,7 +1,9 @@
 package com.cursera.model;
 
+import java.util.Arrays;
+
 public class User {
-    private static Integer mId;
+    private static Integer mId = 1;
     private int id;
     private String name;
     private String surname;
@@ -189,4 +191,30 @@ public class User {
         this.degrees[degreesIndex++] = degree;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", username='" + username + '\'' +
+                ", psw='" + psw + '\'' +
+                ", DNI='" + DNI + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", location='" + location + '\'' +
+                ", province='" + province + '\'' +
+                ", country='" + country + '\'' +
+                ", works=" + Arrays.toString(works) +
+                ", worksIndex=" + worksIndex +
+                ", studies=" + Arrays.toString(studies) +
+                ", studiesIndex=" + studiesIndex +
+                ", interests='" + interests + '\'' +
+                ", firm=" + firm +
+                ", courses=" + Arrays.toString(courses) +
+                ", coursesIndex=" + coursesIndex +
+                ", degrees=" + Arrays.toString(degrees) +
+                ", degreesIndex=" + degreesIndex +
+                ", MAXIMUM=" + MAXIMUM +
+                '}';
+    }
 }

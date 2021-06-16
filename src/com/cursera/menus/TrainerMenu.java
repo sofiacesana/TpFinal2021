@@ -11,7 +11,8 @@ import com.cursera.util.State;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import static com.cursera.data.ToFiles.writingFile;
+
+import static com.cursera.data.ToFiles.writeJsonCourses;
 import static com.cursera.menus.MainMenu.firstScreen;
 import static com.cursera.repository.list.CourseRepository.*;
 import static com.cursera.util.Resources.optionInput;
@@ -21,22 +22,19 @@ public class TrainerMenu {
     public static void trainerOptionsList() {
         System.out.println("           TRAINER MENU           ");
         System.out.println("Please select an option: " +
-                "    1- See your uploaded courses." +
-                "    2- Upload a new course." +
-                "    3- Delete a course." +
-                "    4- Edit the information on one of your courses." +
-                "    5- Edit your information." +
-                "    6- Edit a degree. " +
-                "    7- Go to main menu."
+                "\n    1- See your uploaded courses." +
+                "\n    2- Upload a new course." +
+                "\n    3- Delete a course." +
+                "\n    4- Edit the information on one of your courses." +
+                "\n    5- Edit your information." +
+                "\n    6- Edit a degree. " +
+                "\n    7- Go to main menu."
         );
     }
 
-    public static void trainerMenu(User user, List users, List courses, List degrees) {
+    public static void trainerMenu(All<User> repoUser, All<Course> repoCourse, All<Degree> repoDegree, User user, List<User> users, List<Course> courses, List<Degree> degrees) {
         //Resources
         List<Course> course = courses;
-        All<Course> repoCourse = new CourseRepository();
-        All<User> repoUser = new UserRepository();
-        All<Degree> repoDegree = new DegreeRepository();
         List <Degree> degrees1 = degrees;
         String courseName;
         String description;
@@ -53,7 +51,7 @@ public class TrainerMenu {
                     // sleep program for a minute
                     Thread.sleep(5*1000);
                 } catch (Exception e) {
-                    System.out.println(" Having issues ... try later \t |THANKS| ");
+                    System.out.println(" Having issues... try again later \t |THANKS| ");
                 }
                 break;
             case 2:
@@ -66,7 +64,8 @@ public class TrainerMenu {
                 Course newCourse = new Course(courseName, description,duration);
                 listOfCourses(user.getmId(), newCourse);
                 user.addCourse(newCourse);
-                writingFile("users",users);
+                repoCourse.create(newCourse);
+                writeJsonCourses("courses.json", repoCourse);
                 break;
             case 3:
                 System.out.println(" Course ID ");
@@ -78,26 +77,27 @@ public class TrainerMenu {
                 repoCourse.delete(in.nextInt());
                 Course auxCourse = repoCourse.edit(in.nextInt());
                 user.addCourse(auxCourse);
-                writingFile("users",users);
+                //writingFile("users.txt",users);
                 listOfCourses(user.getmId(), auxCourse);
                 break;
             case 5:
                 user = repoUser.edit(user.getmId());
                 users.remove(user.getmId());
                 users.add(user);
-                writingFile("users",users);
+                //writingFile("users.txt",users);
                 break;
             case 6:
-                System.out.println(" Degree |ID| : ");
+                System.out.println(" Degree |ID|: ");
                 repoDegree.delete(in.nextInt());
                 repoDegree.edit(in.nextInt());
-                writingFile("degrees", degrees);
+                //writingFileDegrees("degrees.txt", degrees);
                 break;
             case 7:
                 System.out.println("Going back to main menu...");
-                firstScreen(users,courses, degrees);
+                firstScreen(repoUser, repoCourse, repoDegree, users,courses, degrees);
                 break;
         }
     }
+
 }
 
