@@ -24,7 +24,7 @@ public class StudentNTrainerMenu {
                 "\n    1- To see the Student options." +
                 "\n    2- To see the Trainer options." +
                 "\n    3- To exit." +
-                "Please select an option: ");
+                "\nPlease select an option: ");
     }
 
     public static void studentNTrainerMenu(All<User> repoUser, All<Course> repoCourse, All<Degree> repoDegree, User user, List users, List courses, List degrees){

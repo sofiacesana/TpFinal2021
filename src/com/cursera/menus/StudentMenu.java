@@ -1,12 +1,8 @@
 package com.cursera.menus;
 
-import com.cursera.model.Course;
-import com.cursera.model.Degree;
-import com.cursera.model.Student;
-import com.cursera.model.User;
+import com.cursera.data.ToFiles;
+import com.cursera.model.*;
 import com.cursera.repository.All;
-import com.cursera.repository.list.CourseRepository;
-import com.cursera.repository.list.UserRepository;
 import com.cursera.util.State;
 
 import java.util.Arrays;
@@ -36,8 +32,6 @@ public class StudentMenu {
 
     public static void studentMenu(All<User> repoUser, All<Course> repoCourse, All<Degree> repoDegree, User user, List<User> users, List<Course> courses, List<Degree> degrees){
 
-        List<Course> allCourses = repoCourse.list();
-
         Scanner in = new Scanner(System.in);
 
         studentOptionsList();
@@ -45,9 +39,10 @@ public class StudentMenu {
         int option = optionInput(1, 6);
         switch(option){
             case 1:
-                listofCourses.forEach((key, value) ->
-                        System.out.println(" [ID Trainer] : " + key +
-                                " [Course] :" + value));
+                for (Course c : courses){
+                    System.out.println(c.toString());
+                }
+
                 try {
                     // sleep program for a minute
                     Thread.sleep(6*10);
@@ -61,10 +56,12 @@ public class StudentMenu {
                 System.out.println(" Course ID: ");
                 enrollIntoAcourse(in.nextInt(), user, courses);
                 courseState(user,in.nextInt(), State.IN_PROGRESS);
+
+                ToFiles<User> userFiles = new ToFiles<>();
+                userFiles.listToFile("users.json", users);
+
                 studentMenu(repoUser, repoCourse, repoDegree, user, users, courses, degrees);
-                users.remove(user.getmId());
-                users.add(user);
-                //writingFile("users.txt",users);
+
             case 3:
                 System.out.println(" ------------------- ");
                 System.out.println(Arrays.toString(user.courses));
@@ -88,15 +85,18 @@ public class StudentMenu {
             case 5:
                 System.out.println(" Course ID: ");
                 dropOutCourse(in.nextInt(),user);
+
+                ToFiles<User> userFiles2 = new ToFiles<>();
+                userFiles2.listToFile("users.json", users);
+
                 studentMenu(repoUser, repoCourse, repoDegree, user, users, courses, degrees);
-                users.remove(user.getmId());
-                users.add(user);
-                //writingFile("users.txt",users);
+
             case 6:
-               user = repoUser.edit(user.getmId());
-               users.remove(user.getmId());
-               users.add(user);
-               //writingFile("users.txt", users);
+                user = repoUser.edit(user);
+
+                ToFiles<User> userFiles3 = new ToFiles<>();
+                userFiles3.listToFile("users.json", users);
+
                 break;
             case 7:
                 System.out.println("Going back to main menu...");

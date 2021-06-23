@@ -4,8 +4,8 @@ import java.util.List;
 
 public interface Crud <T>{
     List<T> list();
-    T searchById(Integer id);
+    T searchById(int id);
     void create (T t);
-    T edit (Integer id);
-    void delete (Integer id);
+    T edit (T t);
+    void delete (int id);
 }

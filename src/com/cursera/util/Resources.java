@@ -16,7 +16,7 @@ public class Resources {
         catch (InputMismatchException e){
             System.out.println("Wrong data type inserted");
         }
-        while (option < i || option > j){
+        if (option < i || option > j){
             in.reset();
             System.out.print("Please insert a valid number: ");
             try{
@@ -32,39 +32,38 @@ public class Resources {
     public static void editInformationListing(User user){
         System.out.println("Choose the field you want to edit: ");
         System.out.println("    1- Name." +
-                "   2- Surname." +
-                "   3- Username." +
-                "   4- Password." +
-                "   5- DNI." +
-                "   6- Phone number." +
-                "   7- Location." +
-                "   8- Province." +
-                "   9- Country.");
+                "\n   2- Surname." +
+                "\n   3- Username." +
+                "\n   4- Password." +
+                "\n   5- DNI." +
+                "\n   6- Phone number." +
+                "\n   7- Location." +
+                "\n   8- Province." +
+                "\n   9- Country.");
+        System.out.println("user" + user.getClass());
         if(user instanceof Student){
             System.out.println("   10- Interests.");
         }else if(user instanceof Trainer){
             System.out.println("   10- Firm.");
         }else if (user instanceof StudentNtrainer){
             System.out.println("   10- Firm." +
-                    "   11- Interests.");
+                    "\n   11- Interests.");
         }
-        System.out.print("Please select an option: ");
     }
 
-    public static void editInformationCourse(Course course) {
+    public static void editInformationCourse() {
         System.out.println("Choose the field you want to edit: ");
         System.out.println("1- Course name" +
-                "2- Course duration" +
-                "3- Course description");
+                "\n2- Course duration" +
+                "\n3- Course description");
     }
 
-    public static void editInformationDegree(Degree degree) {
+    public static void editInformationDegree() {
         System.out.println("Choose the field you want to edit: ");
         System.out.println("1- Degree name" +
-                "2- Course duration" +
-                "3- Trainer name" +
-                "4- Trainer surname" +
-                "5- Firm");
+                "\n2- Course duration" +
+                "\n3- Trainer name" +
+                "\n4- Trainer surname" +
+                "\n5- Firm");
     }
-
 }

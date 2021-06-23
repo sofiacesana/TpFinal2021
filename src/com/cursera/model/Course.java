@@ -3,9 +3,10 @@ package com.cursera.model;
 import com.cursera.util.State;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Course {
-    private static Integer courseId;
+    private static int courseId;
     private int id;
     private String name;
     private String description;
@@ -19,12 +20,14 @@ public class Course {
     public static final int MAX_STUDENTS = 50;
 
     // region CONSTRUCTORS
+
     public Course(){
+        id = ++courseId;
 
     }
     // create a course
     public Course(String name, String description, String duration) {
-        this.courseId = ++id;
+        this.id = ++courseId;
         this.date = LocalDate.now();
         this.name = name;
         this.description = description;
@@ -33,10 +36,11 @@ public class Course {
     }
     // endregion
 
+
     // region GETTERS & SETTERS
 
-    public Integer getCourseId() {
-        return courseId;
+    public int getId() {
+        return this.id;
     }
 
     public String getName() {
@@ -91,5 +95,22 @@ public class Course {
         this.state = state;
     }
 
+    public void addStudent(User student){
+        for(int i = 0; i < MAX_STUDENTS; i++){
+            if(this.students[i] == null){
+                this.students[i] = student;
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", duration='" + duration + '\'' +
+                '}';
+    }
     // endregion
 }

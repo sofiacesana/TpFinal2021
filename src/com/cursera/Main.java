@@ -1,5 +1,6 @@
 package com.cursera;
 
+import com.cursera.data.ToFiles;
 import com.cursera.model.Course;
 import com.cursera.model.Degree;
 import com.cursera.model.User;
@@ -21,12 +22,9 @@ public class Main {
     public static void main(String[] args) {
         List<User> users = readJsonUser("users.json");
 
-        List<Course> courses = new ArrayList();
-        courses = readJsonCourse("courses.json");
+        List<Course> courses = readJsonCourse("courses.json");
 
-        List degrees = new ArrayList();
-        degrees = readJsonDegree("degrees.json");
-
+        List<Degree> degrees = readJsonDegree("degrees.json");
 
         All<User> repoUser = new UserRepository();
         All<Course> repoCourse = new CourseRepository();
@@ -35,7 +33,6 @@ public class Main {
         firstScreen(repoUser, repoCourse, repoDegree, users, courses, degrees);
 
     }
-
 
 
 }

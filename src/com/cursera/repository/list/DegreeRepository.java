@@ -12,7 +12,7 @@ import static com.cursera.util.Resources.*;
 public class DegreeRepository extends AbstractList<Degree> {
 
     @Override
-    public Degree searchById(Integer id) {
+    public Degree searchById(int id) {
         Degree result = null;
         for (Degree whatDegree: dataSource){
             if ( whatDegree.getDegreeId() != null && whatDegree.getDegreeId().equals(id)){
@@ -24,11 +24,10 @@ public class DegreeRepository extends AbstractList<Degree> {
     }
 
     @Override
-    public Degree edit(Integer id) {
-        Degree editDegree = this.searchById(id);
+    public Degree edit(Degree editDegree) {
 
         Scanner scan = new Scanner(System.in);
-        editInformationDegree(editDegree);
+        editInformationDegree();
 
         int op = optionInput(1, 5);
 

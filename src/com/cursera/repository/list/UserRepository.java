@@ -1,6 +1,7 @@
 package com.cursera.repository.list;
 
 import com.cursera.model.Student;
+import com.cursera.model.StudentNtrainer;
 import com.cursera.model.Trainer;
 import com.cursera.model.User;
 import com.cursera.repository.AbstractList;
@@ -18,10 +19,10 @@ public class UserRepository extends AbstractList<User> {
 
 
     @Override
-    public User searchById(Integer id) {
+    public User searchById(int id) {
         User result = null;
-        for (User whatUser: dataSource){
-            if (whatUser.getmId() != null && whatUser.getmId().equals(id)){
+        for (User whatUser : dataSource){
+            if (whatUser.getId() == id){
                 result = whatUser;
                 break;
             }
@@ -31,10 +32,9 @@ public class UserRepository extends AbstractList<User> {
 
 
     @Override
-    public User edit(Integer id) {
-        User editUser = this.searchById(id);
-
+    public User edit(User editUser) {
         Scanner scan = new Scanner(System.in);
+        System.out.println(editUser.toString());
         editInformationListing(editUser);
         int op;
         if(editUser instanceof Trainer || editUser instanceof Student){
@@ -135,7 +135,7 @@ public class UserRepository extends AbstractList<User> {
         int result = 0;
 
         if (field == "id")
-            result = a.getmId().compareTo(b.getmId());
+            result = a.getId() - b.getId();
         if (field == "surname")
             result = a.getSurname().compareTo(b.getSurname());
         if (field == "DNI")
@@ -143,4 +143,5 @@ public class UserRepository extends AbstractList<User> {
 
         return result;
     }
+
 }

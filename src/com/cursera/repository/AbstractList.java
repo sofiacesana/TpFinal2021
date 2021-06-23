@@ -1,5 +1,7 @@
 package com.cursera.repository;
 
+import com.cursera.model.User;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public abstract class AbstractList<T> implements All<T> {
     }
 
     @Override
-    public void delete(Integer id){
+    public void delete(int id){
         this.dataSource.remove(this.searchById(id));
     }
 
@@ -33,6 +35,8 @@ public abstract class AbstractList<T> implements All<T> {
     public int total(){
         return this.dataSource.size();
     }
+
+
 
 
 }

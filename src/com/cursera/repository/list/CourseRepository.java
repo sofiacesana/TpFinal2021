@@ -1,5 +1,6 @@
 package com.cursera.repository.list;
 
+import com.cursera.data.ToFiles;
 import com.cursera.model.*;
 import com.cursera.util.State;
 import com.cursera.repository.AbstractList;
@@ -12,13 +13,12 @@ import static com.cursera.model.StudentNtrainer.MAX_ENROLL;
 import static com.cursera.util.Resources.*;
 
 public class CourseRepository extends AbstractList<Course> {
-    public static Map<Integer, Course> listofCourses = new HashMap<>();
 
     @Override
-    public Course searchById(Integer id) {
+    public Course searchById(int id) {
         Course result = null;
         for (Course whatCourse : dataSource) {
-            if (whatCourse.getCourseId() != null && whatCourse.getCourseId().equals(id)) {
+            if (whatCourse != null && whatCourse.getId() == id) {
                 result = whatCourse;
                 break;
             }
@@ -27,11 +27,10 @@ public class CourseRepository extends AbstractList<Course> {
     }
 
     @Override
-    public Course edit(Integer id) {
-        Course editCourse = this.searchById(id);
+    public Course edit(Course editCourse) {
 
         Scanner scan = new Scanner(System.in);
-        editInformationCourse(editCourse);
+        editInformationCourse();
 
         int op = optionInput(1, 3);
         switch (op) {
@@ -74,29 +73,26 @@ public class CourseRepository extends AbstractList<Course> {
         int result = 0;
 
         if (field == "id")
-            result = a.getCourseId().compareTo(b.getCourseId());
+            result = a.getId() - b.getId();
         if (field == "name")
             result = a.getName().compareTo(b.getName());
 
         return result;
     }
 
-    // making a map of every course with their respective id´s creator
-    public static void listOfCourses(Integer userId, Course course) {
-        listofCourses.put(userId, course);
-        //writeJsonCourses("courses.json", listofCourses);
-    }
-
     public static void enrollIntoAcourse(Integer courseId, User user, List allCourses) {
         List <Course> courses = allCourses;
-
+        Course c = new Course();
         try {
-            for (Course whatCourse : courses) {
-                if (courseId == whatCourse.getCourseId())
-                    if (whatCourse.maxStudentsPerCourse < MAX_STUDENTS
-                            && user.courses.length < MAX_ENROLL)
-                        user.addCourse(whatCourse);
-                whatCourse.students[maxStudentsPerCourse++] = user;
+            for (int i = 0; i < allCourses.size(); i++) {
+                c = (Course) allCourses.get(i);
+                if (courseId == allCourses.get(i))
+                    if (c.maxStudentsPerCourse < MAX_STUDENTS
+                            && user.courses.length < MAX_ENROLL) {
+                        user.addCourse(c);
+                        c.addStudent(user);
+                        allCourses.set(i, c);
+                    }
                 System.out.println(" Successful enrollment ");
                 break;
             }
@@ -108,19 +104,21 @@ public class CourseRepository extends AbstractList<Course> {
     // update the state of a current course (user == student)
     public static void courseState(User user, Integer id, State state) {
 
-        for (Course whatCourse : user.courses) {
-            if (whatCourse.getCourseId().equals(id))
-                whatCourse.setStartDate();
-            whatCourse.setState(whatCourse.getState());
-            if (whatCourse.getState() == State.FINISHED)
-                whatCourse.setFinishDate();
+        if (user.courses != null) {
+            for (Course whatCourse : user.courses) {
+                if (whatCourse.getId() == id)
+                    whatCourse.setStartDate();
+                whatCourse.setState(state);
+                if (whatCourse.getState() == State.FINISHED)
+                    whatCourse.setFinishDate();
+            }
         }
     }
 
     public static void dropOutCourse(Integer courseId, User user) {
         try{
             for (Course whatCourse: user.courses) {
-                if (courseId == whatCourse.getCourseId())
+                if (courseId == whatCourse.getId())
                     whatCourse.setState(State.DROP_OUT);
                 System.out.println(" Successful drop out ");
                 break;
@@ -128,9 +126,5 @@ public class CourseRepository extends AbstractList<Course> {
         } catch (ArrayIndexOutOfBoundsException error){
             System.out.println(" course |NON-EXISTENT| ");
         }
-
-
     }
-
-
 }

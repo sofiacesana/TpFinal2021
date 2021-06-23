@@ -1,5 +1,6 @@
 package com.cursera.menus;
 
+import com.cursera.data.ToFiles;
 import com.cursera.model.*;
 import com.cursera.repository.All;
 import com.cursera.repository.list.UserRepository;
@@ -60,15 +61,17 @@ public class MainMenu {
                     break;
                 case 2:
                     whatUser = registration(repoUser, repoCourse, repoDegree, users, allCourses, degrees);
-                    if(users.get(0) != null){
+
+                    if(users != null){
                         for(var user : users) {
                             repoUser.create(user);
                         }
                     }
                     repoUser.create(whatUser);
                     users = repoUser.list();
-                    writeJsonUser("users.json", repoUser);
-                    firstScreen(repoUser, repoCourse, repoDegree, users, allCourses, degrees);
+
+                    ToFiles<User> userFiles = new ToFiles<>();
+                    userFiles.listToFile("users.json", users);
 
                     firstScreen(repoUser, repoCourse, repoDegree, users, allCourses, degrees);
                     break;
@@ -101,7 +104,7 @@ public class MainMenu {
             System.out.println("    3- Student and Trainer");
             System.out.println(" -0- Back menu ");
 
-            int option = optionInput(1, 3);
+            int option = optionInput(0, 3);
             switch (option) {
                 case 1:
                     whatUser = getDataStudent();
@@ -138,6 +141,5 @@ public class MainMenu {
         }
         return exist;
     }
-
 }
 

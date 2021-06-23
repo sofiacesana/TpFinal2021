@@ -1,9 +1,13 @@
 package com.cursera.model;
 
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import static com.cursera.model.StudentNtrainer.MAX_ENROLL;
+import static com.cursera.model.StudentNtrainer.MAX_SUBMIT;
 
 public class User {
-    private static Integer mId = 1;
+    private static int mId;
     private int id;
     private String name;
     private String surname;
@@ -20,23 +24,24 @@ public class User {
     private int studiesIndex;
     private String interests;
     private int firm;
-    public Course[] courses;
-    private int coursesIndex;
-    public Degree[] degrees;
-    private int degreesIndex;
+    public Course[] courses = new Course[MAX_SUBMIT];
+    public Course[] enrolled = new Course[MAX_ENROLL];
+    private static int coursesIndex;
+    public Degree[] degrees = new Degree[MAX_DEGREES];
+    private static int degreesIndex;
     private static final int MAX_W_S = 6;
     public static final int MAX_DEGREES = 12;
-    private int MAXIMUM;
 
     // region CONSTRUCTORS
 
     public User() {
-        this.mId = ++id;
+        id = ++mId;
+
     }
 
     public User(String name, String surname, String username, String psw, String DNI, String telephone,
                 String location, String province, String country) {
-        this.mId = ++id;
+        this.id = ++mId;
         this.name = name;
         this.surname = surname;
         this.username = username;
@@ -48,8 +53,7 @@ public class User {
         this.country = country;
         this.studies = new Study[MAX_W_S];
         this.works = new Work[MAX_W_S];
-        this.setCourseIndex(MAXIMUM);
-        this.setDegreeIndex(MAX_DEGREES);
+        this.degrees = new Degree[MAX_DEGREES];
     }
 
     public User(String name, String surname, String username, String psw, String DNI, String telephone,
@@ -73,8 +77,8 @@ public class User {
 
     // region GETTERS & SETTERS
 
-    public Integer getmId() {
-        return mId;
+    public int getId() {
+        return id;
     }
 
     public String getName() {
@@ -165,30 +169,27 @@ public class User {
         this.firm = firm;
     }
 
-    public void setCourseIndex(int max) {
-         this.courses = new Course[max];
-    }
-    public void setDegreeIndex(int max) {
-        this.degrees = new Degree[max];
-    }
 
     // endregion
 
     // OTHER METHODS
-    public void addStudy (Study study){
-        this.studies[studiesIndex++] = study;
-    }
 
     public void addWork (Work work){
         this.works[worksIndex++] = work;
     }
 
-    public void addCourse (Course course){
-        this.courses[coursesIndex++] = course;
+    public void addCourse (Course course) {
+        if (courses != null) {
+            for (coursesIndex = 0; coursesIndex < courses.length; coursesIndex++) {
+                courses[coursesIndex] = course;
+            }
+        }
     }
 
+
     public void addDegree (Degree degree){
-        this.degrees[degreesIndex++] = degree;
+            this.degrees[degreesIndex++] = degree;
+
     }
 
     @Override
@@ -205,16 +206,10 @@ public class User {
                 ", province='" + province + '\'' +
                 ", country='" + country + '\'' +
                 ", works=" + Arrays.toString(works) +
-                ", worksIndex=" + worksIndex +
-                ", studies=" + Arrays.toString(studies) +
-                ", studiesIndex=" + studiesIndex +
-                ", interests='" + interests + '\'' +
-                ", firm=" + firm +
-                ", courses=" + Arrays.toString(courses) +
-                ", coursesIndex=" + coursesIndex +
-                ", degrees=" + Arrays.toString(degrees) +
-                ", degreesIndex=" + degreesIndex +
-                ", MAXIMUM=" + MAXIMUM +
+                ", studies= " + Arrays.toString(studies) +
+                ", interests= " + interests + '\'' +
+                ", firm= " + firm +
+                ", degrees= " + Arrays.toString(degrees) +
                 '}';
     }
 }

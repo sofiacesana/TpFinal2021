@@ -3,7 +3,7 @@ package com.cursera.model;
 import java.time.LocalDate;
 
 public class Degree {
-    private static Integer degreeId;
+    private static int degreeId;
     private int id;
     private LocalDate date;
     private String name;
@@ -13,8 +13,13 @@ public class Degree {
     private int firm;
 
     // CONSTRUCTOR
+    public Degree(){
+        this.id = ++degreeId;
+
+    }
+
     public Degree(Course course, User user) {
-        this.degreeId = ++id;
+        this.id = ++degreeId;
         this.date = LocalDate.now();
         this.name = course.getName();
         this.courseDuration = course.getDuration();

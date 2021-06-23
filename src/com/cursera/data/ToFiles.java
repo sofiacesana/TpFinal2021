@@ -9,12 +9,48 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
+import java.lang.reflect.Type;
 import java.util.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class ToFiles {
+public class ToFiles <T> {
 
+    private List<T> elements = new ArrayList<>();
+
+    public ToFiles(){}
+
+    public boolean addElements(T element){
+        if(elements.size() > 100 ) {
+            elements.add(element);
+            return true;
+        }
+        return false;
+    }
+
+    public void listToFile(String fileName, List<T> elements){
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        BufferedWriter fOut = null;
+
+        try{
+            fOut = new BufferedWriter(new FileWriter(new File(fileName)));
+            String json = gson.toJson(elements, elements.getClass());
+            fOut.write(json);
+
+        } catch (IOException e){
+            e.printStackTrace();
+
+        } finally {
+            if (fOut != null){
+                try {
+                    fOut.close();
+
+                } catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     public static List<User> readJsonUser(String fileName) {
         String content = null;
@@ -28,30 +64,6 @@ public class ToFiles {
         }
         List <User> users = new Gson().fromJson(content, new TypeToken<List<User>>() {}.getType());
         return users;
-    }
-
-    public static void writeJsonUser(String fileName, All<User> userRepo){
-        BufferedWriter fOut = null;
-
-        try{
-            fOut = new BufferedWriter(new FileWriter(new File(fileName)));
-            Writer writer = new FileWriter(fileName);
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            gson.toJson(userRepo.list(), writer);
-            writer.flush();
-            writer.close();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if(fOut != null) {
-                try {
-                    fOut.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
     }
 
     public static List<Degree> readJsonDegree(String fileName) {
@@ -68,31 +80,6 @@ public class ToFiles {
         return degrees;
     }
 
-
-    public static void writeJsonDegree(String fileName, All<Degree> degreeRepo){
-        BufferedWriter fOut = null;
-
-        try{
-            fOut = new BufferedWriter(new FileWriter(new File(fileName)));
-            Writer writer = new FileWriter(fileName);
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            gson.toJson(degreeRepo.list(), writer);
-            writer.flush();
-            writer.close();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if(fOut != null) {
-                try {
-                    fOut.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
     public static List<Course> readJsonCourse(String fileName) {
         String content = null;
         File f = new File(fileName);
@@ -107,46 +94,74 @@ public class ToFiles {
         return courses;
     }
 
-    public static void writeJsonCourses(String fileName, All<Course> courseRepo){
-        BufferedWriter fOut = null;
+
+
+
+    public List<Course> fileCourseToList(String fileName){
+        List<Course> list = new ArrayList<>();
+        list = null;
+
+        File fIn = new File(fileName);
+
+        if (!(fIn).exists()) {
+            System.out.println("\nThere aren't courses in file\n");
+            return list;
+        }
 
         try{
-            fOut = new BufferedWriter(new FileWriter(new File(fileName)));
-            Writer writer = new FileWriter(fileName);
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            gson.toJson(courseRepo.list(), writer);
-            writer.flush();
-            writer.close();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if(fOut != null) {
-                try {
-                    fOut.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            ObjectInputStream objInputStream = new ObjectInputStream(new FileInputStream(fIn));
+
+            Object aux = objInputStream.readObject();
+
+            while (aux != null){
+                Course newCourse = new Course();
+                newCourse = (Course) aux;
+                list.add(newCourse);
+
+                aux = objInputStream.readObject();
             }
         }
-    }
-    // file into a map and return it
-    public static Map jsonToMap(String fileName) {
-        Map map = new HashMap();
-
-        try {
-            FileInputStream fileInputStream = new FileInputStream(fileName);
-
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-
-            map = (Map) objectInputStream.readObject();
-
-        } catch(IOException e) {
-            e.printStackTrace();
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        catch (IOException e){
+            if(e.getMessage() != null)
+                System.out.println(e.getMessage());
         }
-        return map;
+        catch (Exception e){
+            System.out.println("Error loading file...");
+        }
+        return list;
     }
+
+    public List<Degree> fileDegreeToList(String fileName){
+        List<Degree> list = new ArrayList<>();
+
+        File fIn = new File(fileName);
+
+        if (!(fIn).exists()) {
+            System.out.println("\nThere aren't courses in file\n");
+            return null;
+        }
+
+        try{
+            ObjectInputStream objInputStream = new ObjectInputStream(new FileInputStream(fIn));
+
+            Object aux = objInputStream.readObject();
+
+            while (aux != null){
+                Degree degree = new Degree();
+                degree = (Degree) aux;
+                list.add(degree);
+
+                aux = objInputStream.readObject();
+            }
+        }
+        catch (IOException e){
+            if(e.getMessage() != null)
+                System.out.println(e.getMessage());
+        }
+        catch (Exception e){
+            System.out.println("Error loading file...");
+        }
+        return list;
+    }
+
 }

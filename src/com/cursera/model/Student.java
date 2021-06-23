@@ -1,4 +1,5 @@
 package com.cursera.model;
+import java.util.Arrays;
 import java.util.Scanner;
 import static com.cursera.model.StudentNtrainer.*;
 
@@ -8,7 +9,7 @@ public class Student extends User{
     public Student(String name, String surname, String username, String psw, String DNI, String telephone,
                    String location, String provinc, String country, String interests) {
         super(name, surname, username, psw, DNI, telephone, location, provinc, country, interests);
-        super.setCourseIndex(MAX_ENROLL); // limit of courses can enroll
+        super.courses = new Course[MAX_ENROLL];
     }
 
     public static Student getDataStudent() {
@@ -38,5 +39,13 @@ public class Student extends User{
         st.setInterests(sc.nextLine());
 
         return st;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "enrolled=" + Arrays.toString(enrolled) +
+                ", degrees=" + Arrays.toString(degrees) +
+                '}';
     }
 }
